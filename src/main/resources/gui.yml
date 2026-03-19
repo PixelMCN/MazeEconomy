@@ -1,0 +1,25 @@
+bank-hub:
+  deposit: LIME_DYE
+  withdraw: RED_DYE
+  info: BOOK
+  accounts: PAPER
+
+deposit-menu:
+  wallet-info: PAPER
+  amount-100: LIME_DYE
+  amount-500: EMERALD
+  amount-1000: EMERALD_BLOCK
+  amount-all: NETHER_STAR
+  amount-custom: WRITABLE_BOOK
+
+withdraw-menu:
+  bank-info: PAPER
+  amount-100: RED_DYE
+  amount-500: REDSTONE
+  amount-1000: REDSTONE_BLOCK
+  amount-all: NETHER_STAR
+  amount-custom: WRITABLE_BOOK
+
+general:
+  background: GRAY_STAINED_GLASS_PANE
+  back-button: ARROW

@@ -1,0 +1,88 @@
+name: MazeEconomy
+version: '${version}'
+main: com.pixelmcn.mazeeconomy.MazeEconomy
+api-version: '1.21'
+description: Multi-currency cross-server economy with global and local economies.
+authors: [ PixelMCN ]
+website: https://github.com/PixelMCN
+
+softdepend:
+  - Vault
+  - PlaceholderAPI
+
+commands:
+  balance:
+    description: Check your local economy balance (wallet + bank + total).
+    usage: /balance [player]
+    permission: mazeeconomy.balance
+    aliases: [ bal ]
+
+  pay:
+    description: Pay another player from your wallet.
+    usage: /pay <player> <amount>
+    permission: mazeeconomy.pay
+
+  balancetop:
+    description: View the local economy leaderboard.
+    usage: /balancetop [page]
+    permission: mazeeconomy.balancetop
+    aliases: [ baltop ]
+
+  bank:
+    description: Open the bank GUI or run bank sub-commands.
+    usage: /bank [deposit|withdraw] [amount|all]
+    permission: mazeeconomy.bank
+
+  mazecoins:
+    description: View your Mazecoin balance.
+    usage: /mazecoins [player]
+    permission: mazeeconomy.global.mazecoins
+    aliases: [ mc, coins ]
+
+  shards:
+    description: View your Shard balance.
+    usage: /shards [player]
+    permission: mazeeconomy.global.shards
+
+  eco:
+    description: Admin economy management.
+    usage: /eco <set|add|remove> <local|mazecoins|shards> <player> <amount>
+    permission: mazeeconomy.admin.eco
+
+  mazeeconomy:
+    description: MazeEconomy plugin management and help.
+    usage: /mazeeconomy <reload|info|help>
+    permission: mazeeconomy.admin.manage
+    aliases: [ meco ]
+
+permissions:
+  mazeeconomy.balance:
+    description: View own or another player's balance.
+    default: true
+  mazeeconomy.pay:
+    description: Pay another player with local currency.
+    default: true
+  mazeeconomy.balancetop:
+    description: View the local balance leaderboard.
+    default: true
+  mazeeconomy.bank:
+    description: Use the bank system.
+    default: true
+  mazeeconomy.global.mazecoins:
+    description: View Mazecoin balance.
+    default: true
+  mazeeconomy.global.shards:
+    description: View Shard balance.
+    default: true
+  mazeeconomy.admin.eco:
+    description: Admin set/add/remove balances.
+    default: op
+  mazeeconomy.admin.manage:
+    description: Reload and manage the plugin.
+    default: op
+  mazeeconomy.admin.*:
+    description: All admin permissions.
+    default: op
+    children:
+      mazeeconomy.admin.eco: true
+      mazeeconomy.admin.manage: true

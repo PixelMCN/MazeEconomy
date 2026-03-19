@@ -1,0 +1,115 @@
+# ╔══════════════════════════════════════════════════════╗
+# ║           MazeEconomy Configuration                  ║
+# ║        Author: PixelMCN | Version: 1.0.0             ║
+# ╚══════════════════════════════════════════════════════╝
+
+server:
+  id: "survival"
+  display-name: "Survival Server"
+
+# The language file to use from the 'lang' folder (e.g., 'en_US' -> 'lang/en_US.yml')
+locale: "en_US"
+
+# -------------------------------------------------------
+#  LOCAL ECONOMY  (SQLite — per server, Vault-compatible)
+#  Currency is split into WALLET (spendable) and BANK.
+#  Vault always reads/writes the WALLET balance.
+# 
+#  IMPORTANT: This subsystem operates entirely off local storage,
+#  so a network connection is not required to function.
+# -------------------------------------------------------
+local-economy:
+  enabled: true
+  currency:
+    name: "Cash"
+    name-plural: "Cash"
+    symbol: "$"
+    starting-wallet: 1000.0
+    starting-bank: 0.0
+    format-decimals: 2
+  leaderboard:
+    entries-per-page: 10
+
+  # ── Bank ──────────────────────────────────────────────
+  bank:
+    enabled: true
+    # Interest settings
+    interest:
+      enabled: true
+      # rate: percentage of bank balance awarded each interval (e.g. 0.5 = 0.5%)
+      rate: 0.5
+      # interval: How often interest is paid out.
+      # Supported formats: s (seconds), m (minutes), h (hours), d (days), w (weeks), M (months - 30 days)
+      # Examples: "60s" (60 seconds), "10m" (10 mins), "24h" (24 hours), "1d" (1 day), "1M" (1 month)
+      interval: "60m"
+    # withdraw-fee: percentage taken when withdrawing from bank (0 = no fee)
+    withdraw-fee: 0.0
+
+  # ── Death Penalty ──────────────────────────────────────
+  death-penalty:
+    enabled: true
+    # mode: "fixed" or "percentage"
+    mode: "percentage"
+    # amount: coins lost if mode=fixed | percentage of wallet if mode=percentage
+    amount: 10.0
+    # minimum-wallet: only deduct if wallet balance is ABOVE this threshold
+    minimum-wallet: 1000.0
+    # announce: notify the player of the deduction on respawn
+    announce: true
+
+  # ── PvP Penalty ────────────────────────────────────────
+  pvp-penalty:
+    enabled: true
+    # mode: "fixed" or "percentage"
+    mode: "percentage"
+    # amount: coins stolen if mode=fixed | percentage of wallet if mode=percentage
+    amount: 5.0
+    # minimum-wallet: only trigger if victim's wallet balance is ABOVE this threshold
+    minimum-wallet: 500.0
+    # transfer-to-killer: give the deducted amount to the killer's wallet
+    transfer-to-killer: true
+    # announce: notify the killer and victim
+    announce: true
+
+# -------------------------------------------------------
+#  GLOBAL ECONOMY  (MariaDB — synced across ALL servers)
+# 
+#  IMPORTANT: For global currencies (Mazecoins & Shards) to 
+#  work correctly, you MUST have a MariaDB database properly 
+#  configured and connected in the "database" section below.
+# -------------------------------------------------------
+global-economy:
+  enabled: true
+  sync-interval-ticks: 100
+  currencies:
+    mazecoins:
+      name: "Mazecoin"
+      name-plural: "Mazecoins"
+      symbol: "⬡"
+      starting-balance: 0.0
+      format-decimals: 0
+    shards:
+      name: "Shard"
+      name-plural: "Shards"
+      symbol: "◈"
+      starting-balance: 0.0
+      format-decimals: 0
+
+# -------------------------------------------------------
+#  DATABASE
+# -------------------------------------------------------
+database:
+  mariadb:
+    host: "localhost"
+    port: 3306
+    database: "mazeeconomy"
+    username: "root"
+    password: "changeme"
+    pool:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+
+

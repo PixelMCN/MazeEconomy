@@ -1,0 +1,137 @@
+prefix: "<gray>[<#C9A55A><b>ᴍᴇᴄᴏ</b></#C9A55A>]</gray> "
+
+local:
+  balance-self: "<gray>ᴡᴀʟʟᴇᴛ:</gray> <#C9A55A>{symbol}{wallet}</#C9A55A> <gray>{currency}</gray> <dark_gray>•</dark_gray> <gray>ʙᴀɴᴋ:</gray> <#C9A55A>{symbol}{bank}</#C9A55A> <gray>{currency}</gray> <dark_gray>•</dark_gray> <gray>ᴛᴏᴛᴀʟ:</gray> <#C9A55A>{symbol}{total}</#C9A55A> <gray>{currency}</gray>"
+  balance-other: "<gray>{player}'s ᴡᴀʟʟᴇᴛ:</gray> <#C9A55A>{symbol}{wallet}</#C9A55A> <gray>{currency}</gray> <dark_gray>•</dark_gray> <gray>ʙᴀɴᴋ:</gray> <#C9A55A>{symbol}{bank}</#C9A55A> <gray>{currency}</gray> <dark_gray>•</dark_gray> <gray>ᴛᴏᴛᴀʟ:</gray> <#C9A55A>{symbol}{total}</#C9A55A> <gray>{currency}</gray>"
+  pay-success: "<#7FB77E>ᴘᴀʏᴍᴇɴᴛ sᴇɴᴛ</#7FB77E> <gray>→</gray> <white>{player}</white> <gray>(<#C9A55A>{symbol}{amount}</#C9A55A>)</gray>"
+  pay-received: "<#7FB77E>ᴘᴀʏᴍᴇɴᴛ ʀᴇᴄᴇɪᴠᴇᴅ</#7FB77E> <gray>←</gray> <white>{player}</white> <gray>(<#C9A55A>{symbol}{amount}</#C9A55A>)</gray>"
+  pay-self: "<#D97A7A>ᴇʀʀᴏʀ:</#D97A7A> <gray>ʏᴏᴜ ᴄᴀɴɴᴏᴛ ᴘᴀʏ ʏᴏᴜʀsᴇʟғ.</gray>"
+  pay-insufficient: "<#D97A7A>ɪɴsᴜғғɪᴄɪᴇɴᴛ ᴡᴀʟʟᴇᴛ ғᴜɴᴅs</#D97A7A> <gray>(<#C9A55A>{symbol}{amount}</#C9A55A> available)</gray>"
+  pay-invalid-amount: "<#D97A7A>ɪɴᴠᴀʟɪᴅ ᴀᴍᴏᴜɴᴛ</#D97A7A>"
+  baltop-header: "<gray>────</gray> <#C9A55A><b>ʙᴀʟᴀɴᴄᴇ ᴛᴏᴘ</b></#C9A55A> <gray>({page}/{max})</gray> <gray>────</gray>"
+  baltop-entry: "<gray>{rank}.</gray> <white>{player}</white> <dark_gray>•</dark_gray> <#C9A55A>{symbol}{amount}</#C9A55A>"
+  baltop-footer: "<dark_gray>/baltop <page></dark_gray>"
+  bank-deposit-success: "<#7FB77E>ᴅᴇᴘᴏsɪᴛᴇᴅ</#7FB77E> <#C9A55A>{symbol}{amount}</#C9A55A> <gray>ɪɴᴛᴏ ʏᴏᴜʀ ʙᴀɴᴋ.</gray>"
+  bank-withdraw-success: "<#7FB77E>ᴡɪᴛʜᴅʀᴀᴡɴ</#7FB77E> <#C9A55A>{symbol}{amount}</#C9A55A> <gray>ᴛᴏ ʏᴏᴜʀ ᴡᴀʟʟᴇᴛ.</gray>"
+  bank-insufficient: "<#D97A7A>ɪɴsᴜғғɪᴄɪᴇɴᴛ ʙᴀʟᴀɴᴄᴇ</#D97A7A>"
+  bank-invalid-amount: "<#D97A7A>ɪɴᴠᴀʟɪᴅ ᴀᴍᴏᴜɴᴛ</#D97A7A>"
+  bank-interest: "<#7FB77E>ɪɴᴛᴇʀᴇsᴛ ᴇᴀʀɴᴇᴅ</#7FB77E> <gray>+<#C9A55A>{symbol}{amount}</#C9A55A> <gray>ᴏɴ ʏᴏᴜʀ ʙᴀɴᴋ ʙᴀʟᴀɴᴄᴇ.</gray>"
+  prompt-deposit: "<yellow>ᴘʟᴇᴀsᴇ ᴛʏᴘᴇ ᴛʜᴇ ᴇxᴀᴄᴛ ᴀᴍᴏᴜɴᴛ ʏᴏᴜ ᴡɪsʜ ᴛᴏ ᴅᴇᴘᴏsɪᴛ ɪɴ ᴄʜᴀᴛ (ᴏʀ ᴛʏᴘᴇ 'ᴄᴀɴᴄᴇʟ' ᴛᴏ ᴇxɪᴛ).</yellow>"
+  prompt-withdraw: "<yellow>ᴘʟᴇᴀsᴇ ᴛʏᴘᴇ ᴛʜᴇ ᴇxᴀᴄᴛ ᴀᴍᴏᴜɴᴛ ʏᴏᴜ ᴡɪsʜ ᴛᴏ ᴡɪᴛʜᴅʀᴀᴡ ɪɴ ᴄʜᴀᴛ (ᴏʀ ᴛʏᴘᴇ 'ᴄᴀɴᴄᴇʟ' ᴛᴏ ᴇxɪᴛ).</yellow>"
+  prompt-invalid: "<#D97A7A>ɪɴᴠᴀʟɪᴅ ɴᴜᴍʙᴇʀ. ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴀ ᴠᴀʟɪᴅ ɴᴜᴍᴇʀɪᴄ ᴀᴍᴏᴜɴᴛ ᴡɪᴛʜᴏᴜᴛ sʏᴍʙᴏʟs.</#D97A7A>"
+  prompt-cancelled: "<#D97A7A>ᴛʀᴀɴsᴀᴄᴛɪᴏɴ ᴄᴀɴᴄᴇʟʟᴇᴅ.</#D97A7A>"
+  death-penalty: "<#D97A7A>ʏᴏᴜ ʟᴏsᴛ</#D97A7A> <#C9A55A>{symbol}{amount}</#C9A55A> <gray>ᴏɴ ᴅᴇᴀᴛʜ.</gray>"
+  pvp-penalty-victim: "<#D97A7A>ʏᴏᴜ ʟᴏsᴛ</#D97A7A> <#C9A55A>{symbol}{amount}</#C9A55A> <gray>ᴛᴏ</gray> <white>{player}</white> <gray>ɪɴ ᴘᴠᴘ.</gray>"
+  pvp-steal: "<#7FB77E>ʏᴏᴜ ʟᴏᴏᴛᴇᴅ</#7FB77E> <#C9A55A>{symbol}{amount}</#C9A55A> <gray>ғʀᴏᴍ</gray> <white>{player}</white><gray>.</gray>"
+
+global:
+  balance-mazecoins-self: "<gray>ᴍᴀᴢᴇᴄᴏɪɴs:</gray> <#C9A55A>{symbol}{amount}</#C9A55A>"
+  balance-mazecoins-other: "<gray>{player}'s ᴍᴀᴢᴇᴄᴏɪɴs:</gray> <#C9A55A>{symbol}{amount}</#C9A55A>"
+  balance-shards-self: "<gray>sʜᴀʀᴅs:</gray> <#6FA8DC>{symbol}{amount}</#6FA8DC>"
+  balance-shards-other: "<gray>{player}'s sʜᴀʀᴅs:</gray> <#6FA8DC>{symbol}{amount}</#6FA8DC>"
+  disabled: "<#D97A7A>ɢʟᴏʙᴀʟ ᴇᴄᴏɴᴏᴍʏ ɪs ᴅɪsᴀʙʟᴇᴅ</#D97A7A> <gray>ᴏɴ ᴛʜɪs sᴇʀᴠᴇʀ. ᴄᴏɴɴᴇᴄᴛ ᴀ ᴍᴀʀɪᴀᴅʙ ᴅᴀᴛᴀʙᴀsᴇ ᴛᴏ ᴇɴᴀʙʟᴇ ɪᴛ.</gray>"
+
+admin:
+  set-success: "<gray>sᴇᴛ</gray> <white>{player}</white> <gray>→</gray> <#C9A55A>{symbol}{amount}</#C9A55A> <gray>{currency}</gray>"
+  add-success: "<gray>ᴀᴅᴅᴇᴅ</gray> <#C9A55A>{symbol}{amount}</#C9A55A> <gray>→</gray> <white>{player}</white>"
+  remove-success: "<gray>ʀᴇᴍᴏᴠᴇᴅ</gray> <#C9A55A>{symbol}{amount}</#C9A55A> <gray>←</gray> <white>{player}</white>"
+  remove-insufficient: "<#D97A7A>ɪɴsᴜғғɪᴄɪᴇɴᴛ ʙᴀʟᴀɴᴄᴇ</#D97A7A>"
+  invalid-amount: "<#D97A7A>ɪɴᴠᴀʟɪᴅ ᴀᴍᴏᴜɴᴛ</#D97A7A>"
+  player-not-found: "<#D97A7A>ᴘʟᴀʏᴇʀ ɴᴏᴛ ғᴏᴜɴᴅ:</#D97A7A> <gray>{player}</gray>"
+
+no-permission: "<#D97A7A>ɴᴏ ᴘᴇʀᴍɪssɪᴏɴ</#D97A7A>"
+player-only: "<#D97A7A>ᴘʟᴀʏᴇʀ ᴏɴʟʏ ᴄᴏᴍᴍᴀɴᴅ</#D97A7A>"
+reload-success: "<#7FB77E>ᴄᴏɴғɪɢ ʀᴇʟᴏᴀᴅᴇᴅ</#7FB77E>"
+db-error: "<#D97A7A>ᴅᴀᴛᴀʙᴀsᴇ ᴇʀʀᴏʀ</#D97A7A>"
+
+# -------------------------------------
+# GUI TEXT AND LORES
+# -------------------------------------
+gui:
+  bank-hub:
+    title: "<gray>[<#C9A55A><b>ʙᴀɴᴋ ʜᴜʙ</b></#C9A55A>]</gray>"
+    deposit:
+      name: "<!italic><#7FB77E><b>ᴅᴇᴘᴏsɪᴛ ᴍᴇɴᴜ</b></#7FB77E>"
+      lore:
+        - "<!italic><gray>Move money into your bank safely</gray>"
+        - ""
+        - "<!italic><yellow>Click to open »</yellow>"
+    withdraw:
+      name: "<!italic><#D97A7A><b>ᴡɪᴛʜᴅʀᴀᴡ ᴍᴇɴᴜ</b></#D97A7A>"
+      lore:
+        - "<!italic><gray>Take money out of your bank</gray>"
+        - ""
+        - "<!italic><yellow>Click to open »</yellow>"
+    info:
+      name: "<!italic><#6FA8DC><b>ʙᴀɴᴋ ɪɴғᴏ</b></#6FA8DC>"
+      lore:
+        - "<!italic><gray>Your money grows while stored safely!</gray>"
+        - ""
+        - "<!italic><gray>Interest Rate</gray> <dark_gray>»</dark_gray> <yellow>{rate}%</yellow>"
+        - "<!italic><gray>Payout Interval</gray> <dark_gray>»</dark_gray> <yellow>Every {interval}</yellow>"
+    accounts:
+      name: "<!italic><white><b>ʏᴏᴜʀ ᴀᴄᴄᴏᴜɴᴛs</b></white>"
+      lore:
+        - "<!italic><gray>Wallet</gray> <dark_gray>»</dark_gray> <#C9A55A>{symbol}{wallet}</#C9A55A>"
+        - "<!italic><gray>Bank</gray> <dark_gray>»</dark_gray> <#C9A55A>{symbol}{bank}</#C9A55A>"
+        - "<!italic><dark_gray>────────────</dark_gray>"
+        - "<!italic><white>Total Wealth</white> <dark_gray>»</dark_gray> <#C9A55A>{symbol}{total}</#C9A55A>"
+  
+  deposit-menu:
+    title: "<gray>[<#7FB77E><b>ᴅᴇᴘᴏsɪᴛ</b></#7FB77E>]</gray>"
+    wallet-info:
+      name: "<!italic><white><b>ʏᴏᴜʀ ᴡᴀʟʟᴇᴛ</b></white>"
+      lore:
+        - "<!italic><gray>Available</gray> <dark_gray>»</dark_gray> <#C9A55A>{symbol}{wallet}</#C9A55A>"
+    amount:
+      name: "<!italic><#7FB77E><b>ᴅᴇᴘᴏsɪᴛ</b></#7FB77E>"
+      lore-fixed:
+        - "<!italic><gray>Deposit specific amount</gray>"
+        - ""
+        - "<!italic><gray>Amount</gray> <dark_gray>»</dark_gray> <#C9A55A>{symbol}{amount}</#C9A55A>"
+        - ""
+        - "<!italic><yellow>Click to deposit</yellow>"
+      lore-all:
+        - "<!italic><gray>Deposit everything</gray>"
+        - ""
+        - "<!italic><gray>Amount</gray> <dark_gray>»</dark_gray> <#C9A55A>{symbol}{amount}</#C9A55A>"
+        - ""
+        - "<!italic><yellow>Click to deposit</yellow>"
+    custom:
+      name: "<!italic><#7FB77E><b>ᴄᴜsᴛᴏᴍ ᴀᴍᴏᴜɴᴛ</b></#7FB77E>"
+      lore:
+        - "<!italic><gray>Type a specific amount</gray>"
+        - "<!italic><gray>in the chat.</gray>"
+        - ""
+        - "<!italic><yellow>Click to specify</yellow>"
+
+  withdraw-menu:
+    title: "<gray>[<#D97A7A><b>ᴡɪᴛʜᴅʀᴀᴡ</b></#D97A7A>]</gray>"
+    bank-info:
+      name: "<!italic><white><b>ʏᴏᴜʀ ʙᴀɴᴋ</b></white>"
+      lore:
+        - "<!italic><gray>Available</gray> <dark_gray>»</dark_gray> <#C9A55A>{symbol}{bank}</#C9A55A>"
+    amount:
+      name: "<!italic><#D97A7A><b>ᴡɪᴛʜᴅʀᴀᴡ</b></#D97A7A>"
+      lore-fixed:
+        - "<!italic><gray>Withdraw specific amount</gray>"
+        - ""
+        - "<!italic><gray>Amount</gray> <dark_gray>»</dark_gray> <#C9A55A>{symbol}{amount}</#C9A55A>"
+        - ""
+        - "<!italic><yellow>Click to withdraw</yellow>"
+      lore-all:
+        - "<!italic><gray>Withdraw everything</gray>"
+        - ""
+        - "<!italic><gray>Amount</gray> <dark_gray>»</dark_gray> <#C9A55A>{symbol}{amount}</#C9A55A>"
+        - ""
+        - "<!italic><yellow>Click to withdraw</yellow>"
+    custom:
+      name: "<!italic><#D97A7A><b>ᴄᴜsᴛᴏᴍ ᴀᴍᴏᴜɴᴛ</b></#D97A7A>"
+      lore:
+        - "<!italic><gray>Type a specific amount</gray>"
+        - "<!italic><gray>in the chat.</gray>"
+        - ""
+        - "<!italic><yellow>Click to specify</yellow>"
+
+  back-arrow:
+    name: "<!italic><red><b>« ʙᴀᴄᴋ</b></red>"
