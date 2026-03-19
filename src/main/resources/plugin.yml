@@ -30,7 +30,7 @@ commands:
 
   bank:
     description: Open the bank GUI or run bank sub-commands.
-    usage: /bank [deposit|withdraw] [amount|all]
+    usage: /bank [deposit/withdraw] [amount/all]
     permission: mazeeconomy.bank
 
   mazecoins:
@@ -46,12 +46,12 @@ commands:
 
   eco:
     description: Admin economy management.
-    usage: /eco <set|add|remove> <local|mazecoins|shards> <player> <amount>
+    usage: /eco <set/add/remove> <local/mazecoins/shards> <player> <amount>
     permission: mazeeconomy.admin.eco
 
   mazeeconomy:
     description: MazeEconomy plugin management and help.
-    usage: /mazeeconomy <reload|info|help>
+    usage: /mazeeconomy <reload/info/help>
     permission: mazeeconomy.admin.manage
     aliases: [ meco ]
 

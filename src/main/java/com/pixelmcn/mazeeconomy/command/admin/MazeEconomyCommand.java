@@ -18,7 +18,7 @@ public class MazeEconomyCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
-                             @NotNull String label, @NotNull String[] args) {
+            @NotNull String label, @NotNull String[] args) {
 
         if (args.length == 0 || args[0].equalsIgnoreCase("help")) {
             sendHelp(sender);
@@ -70,8 +70,8 @@ public class MazeEconomyCommand implements CommandExecutor, TabCompleter {
             line(sender, "");
             section(sender, "ʙᴀɴᴋ", "(ɪɴᴛᴇʀᴇsᴛ: " + cfg.getBankInterestRate() + "%)");
             cmd(sender, "/bank", "ᴏᴘᴇɴ ɢᴜɪ");
-            cmd(sender, "/bank deposit <amount|all>", "ᴅᴇᴘᴏsɪᴛ");
-            cmd(sender, "/bank withdraw <amount|all>", "ᴡɪᴛʜᴅʀᴀᴡ");
+            cmd(sender, "/bank deposit <amount/all>", "ᴅᴇᴘᴏsɪᴛ");
+            cmd(sender, "/bank withdraw <amount/all>", "ᴡɪᴛʜᴅʀᴀᴡ");
         }
 
         line(sender, "");
@@ -117,7 +117,8 @@ public class MazeEconomyCommand implements CommandExecutor, TabCompleter {
 
         header(sender, "Plugin Info");
 
-        line(sender, "  <white>MazeEconomy</white> <dark_gray>v" + plugin.getDescription().getVersion() + "</dark_gray>");
+        line(sender,
+                "  <white>MazeEconomy</white> <dark_gray>v" + plugin.getDescription().getVersion() + "</dark_gray>");
 
         line(sender, "  <gray>sᴇʀᴠᴇʀ</gray> <dark_gray>»</dark_gray> <white>" + cfg.getServerId() + "</white>");
         line(sender, "  <gray>ᴄᴜʀʀᴇɴᴄʏ</gray> <dark_gray>»</dark_gray> <white>" +
@@ -152,21 +153,20 @@ public class MazeEconomyCommand implements CommandExecutor, TabCompleter {
     private void header(CommandSender sender, String title) {
         sender.sendMessage(mm.deserialize("<dark_gray>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"));
         sender.sendMessage(mm.deserialize(
-                "  <gray>[<#C9A55A><b>ᴍᴀᴢᴇᴇᴄᴏɴᴏᴍʏ</b></#C9A55A>]</gray> <dark_gray>»</dark_gray> <white>" + title + "</white>"
-        ));
+                "  <gray>[<#C9A55A><b>ᴍᴀᴢᴇᴇᴄᴏɴᴏᴍʏ</b></#C9A55A>]</gray> <dark_gray>»</dark_gray> <white>" + title
+                        + "</white>"));
         sender.sendMessage(mm.deserialize("<dark_gray>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"));
     }
 
     private void section(CommandSender sender, String title, String meta) {
         sender.sendMessage(mm.deserialize(
-                "  <#C9A55A>" + title + "</#C9A55A> <dark_gray>" + meta + "</dark_gray>"
-        ));
+                "  <#C9A55A>" + title + "</#C9A55A> <dark_gray>" + meta + "</dark_gray>"));
     }
 
     private void cmd(CommandSender sender, String command, String description) {
         sender.sendMessage(mm.deserialize(
-                "  <dark_gray>›</dark_gray> <#C9A55A>" + command + "</#C9A55A> <dark_gray>—</dark_gray> <gray>" + description + "</gray>"
-        ));
+                "  <dark_gray>›</dark_gray> <#C9A55A>" + command + "</#C9A55A> <dark_gray>—</dark_gray> <gray>"
+                        + description + "</gray>"));
     }
 
     private String ok(boolean state) {
@@ -181,9 +181,9 @@ public class MazeEconomyCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender,
-                                      @NotNull Command command,
-                                      @NotNull String alias,
-                                      @NotNull String[] args) {
+            @NotNull Command command,
+            @NotNull String alias,
+            @NotNull String[] args) {
 
         if (args.length == 1) {
             return List.of("help", "reload", "info").stream()

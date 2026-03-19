@@ -66,9 +66,9 @@ For proxies like BungeeCord or Velocity managing multiple servers:
 
 | Command | Required Permission | Description |
 |---------|---------------------|-------------|
-| `/eco set <local|mazecoins|shards> <player> <amount>` | `mazeeconomy.admin.eco` | Explicitly define a player's balance |
-| `/eco add <local|mazecoins|shards> <player> <amount>` | `mazeeconomy.admin.eco` | Inject currency into a player's balance |
-| `/eco remove <local|mazecoins|shards> <player> <amount>` | `mazeeconomy.admin.eco` | Deduct currency from a player's balance |
+| `/eco set <local/mazecoins/shards> <player> <amount>` | `mazeeconomy.admin.eco` | Explicitly define a player's balance |
+| `/eco add <local/mazecoins/shards> <player> <amount>` | `mazeeconomy.admin.eco` | Inject currency into a player's balance |
+| `/eco remove <local/mazecoins/shards> <player> <amount>` | `mazeeconomy.admin.eco` | Deduct currency from a player's balance |
 | `/mazeeconomy reload` | `mazeeconomy.admin.manage` | Refresh configuration files safely |
 | `/mazeeconomy info` | None | Print internal plugin telemetry |
 
