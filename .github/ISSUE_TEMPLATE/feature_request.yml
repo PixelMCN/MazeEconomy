@@ -1,0 +1,30 @@
+name: Feature Request
+description: Suggest an idea for MazeEconomy
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a feature! Please clearly outline your idea below.
+  - type: textarea
+    id: description
+    attributes:
+      label: Feature Description
+      description: Please describe the feature you would like to see added to MazeEconomy.
+    validations:
+      required: true
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use Case
+      description: Why do you need this feature? How would it improve the plugin?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions
+      description: Have you considered any alternative solutions or workarounds?
+    validations:
+      required: false
