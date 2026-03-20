@@ -41,12 +41,21 @@ public class ConfigManager {
                 .loadConfiguration(new InputStreamReader(defStream, StandardCharsets.UTF_8));
 
         int currentVersion = defConfig.getInt("config-version", 1);
-        int fileVersion = userConfig.getInt("config-version", 1);
 
-        if (fileVersion < currentVersion) {
-            plugin.getLogger()
-                    .info("Updating config.yml from version " + fileVersion + " to " + currentVersion + "...");
+        int fileVersion = userConfig.contains("config-version")
+                ? userConfig.getInt("config-version")
+                : -1;
 
+        if (fileVersion == -1 || fileVersion < currentVersion) {
+
+            if (fileVersion == -1) {
+                plugin.getLogger().info("Updating config.yml (missing version) to version " + currentVersion + "...");
+            } else {
+                plugin.getLogger()
+                        .info("Updating config.yml from version " + fileVersion + " to " + currentVersion + "...");
+            }
+
+            // Merge user values into new default config
             for (String key : userConfig.getKeys(true)) {
                 if (!userConfig.isConfigurationSection(key) && defConfig.contains(key)) {
                     defConfig.set(key, userConfig.get(key));
@@ -56,16 +65,18 @@ public class ConfigManager {
             defConfig.set("config-version", currentVersion);
 
             try {
-                int oldVer = userConfig.contains("config-version") ? userConfig.getInt("config-version") : 0;
+                int oldVer = fileVersion == -1 ? 0 : fileVersion;
                 File backupFile = new File(plugin.getDataFolder(), "config-old-v" + oldVer + ".yml");
+
                 if (backupFile.exists())
                     backupFile.delete();
+
                 java.nio.file.Files.copy(configFile.toPath(), backupFile.toPath(),
                         java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 
                 defConfig.save(configFile);
-                plugin.getLogger().info("config.yml successfully updated (comments preserved). Backup saved as "
-                        + backupFile.getName());
+
+                plugin.getLogger().info("config.yml successfully updated. Backup saved as " + backupFile.getName());
             } catch (IOException e) {
                 plugin.getLogger().severe("Could not save config.yml: " + e.getMessage());
             }
@@ -80,7 +91,7 @@ public class ConfigManager {
         this.config = plugin.getConfig();
     }
 
-    // ── Server ────────────────────────────────────────────────────────────────
+    // ── Server ─────────────────────────────────────────────
     public String getServerId() {
         return config.getString("server.id", "default");
     }
@@ -89,17 +100,17 @@ public class ConfigManager {
         return config.getString("server.display-name", "Server");
     }
 
-    // ── Local Economy ─────────────────────────────────────────────────────────
+    // ── Local Economy ──────────────────────────────────────
     public boolean isLocalEconomyEnabled() {
         return config.getBoolean("local-economy.enabled", true);
     }
 
     public String getLocalCurrencyName() {
-        return config.getString("local-economy.currency.name", "Coin");
+        return config.getString("local-economy.currency.name", "Cash");
     }
 
     public String getLocalCurrencyNamePlural() {
-        return config.getString("local-economy.currency.name-plural", "Coins");
+        return config.getString("local-economy.currency.name-plural", "Cash");
     }
 
     public String getLocalCurrencySymbol() {
@@ -122,7 +133,7 @@ public class ConfigManager {
         return config.getInt("local-economy.leaderboard.entries-per-page", 10);
     }
 
-    // ── Bank ──────────────────────────────────────────────────────────────────
+    // ── Bank ───────────────────────────────────────────────
     public boolean isBankEnabled() {
         return config.getBoolean("local-economy.bank.enabled", true);
     }
@@ -143,7 +154,7 @@ public class ConfigManager {
         return config.getDouble("local-economy.bank.withdraw-fee", 0.0);
     }
 
-    // ── Death Penalty ─────────────────────────────────────────────────────────
+    // ── Death Penalty ──────────────────────────────────────
     public boolean isDeathPenaltyEnabled() {
         return config.getBoolean("local-economy.death-penalty.enabled", true);
     }
@@ -164,7 +175,7 @@ public class ConfigManager {
         return config.getBoolean("local-economy.death-penalty.announce", true);
     }
 
-    // ── PvP Penalty ───────────────────────────────────────────────────────────
+    // ── PvP Penalty ────────────────────────────────────────
     public boolean isPvpPenaltyEnabled() {
         return config.getBoolean("local-economy.pvp-penalty.enabled", true);
     }
@@ -189,7 +200,7 @@ public class ConfigManager {
         return config.getBoolean("local-economy.pvp-penalty.announce", true);
     }
 
-    // ── Global Economy ────────────────────────────────────────────────────────
+    // ── Global Economy ─────────────────────────────────────
     public boolean isGlobalEconomyEnabled() {
         return config.getBoolean("global-economy.enabled", true);
     }
@@ -238,7 +249,7 @@ public class ConfigManager {
         return config.getInt("global-economy.currencies.shards.format-decimals", 0);
     }
 
-    // ── MariaDB ───────────────────────────────────────────────────────────────
+    // ── MariaDB ────────────────────────────────────────────
     public String getMariaDBHost() {
         return config.getString("database.mariadb.host", "localhost");
     }
@@ -279,7 +290,7 @@ public class ConfigManager {
         return config.getLong("database.mariadb.pool.max-lifetime", 1800000L);
     }
 
-    // ── Messages ──────────────────────────────────────────────────────────────
+    // ── Messages ───────────────────────────────────────────
     public String getPrefix() {
         return plugin.getLanguageManager().getPrefix();
     }

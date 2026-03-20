@@ -23,63 +23,72 @@ public class LanguageManager {
         String locale = plugin.getConfig().getString("locale", "en_US");
         File langFile = new File(plugin.getDataFolder(), "lang/" + locale + ".yml");
 
+        // Create file if missing
         if (!langFile.exists()) {
             langFile.getParentFile().mkdirs();
             try {
                 plugin.saveResource("lang/" + locale + ".yml", false);
             } catch (Exception e) {
-                plugin.getLogger().warning("Language file " + locale + " not found natively. Creating empty file.");
+                plugin.getLogger().warning("Language file " + locale + " not found in jar. Creating empty file.");
                 try {
                     langFile.createNewFile();
                 } catch (Exception ignored) {
                 }
             }
         }
+
         langConfig = YamlConfiguration.loadConfiguration(langFile);
 
         InputStream defStream = plugin.getResource("lang/" + locale + ".yml");
-        if (defStream != null) {
-            YamlConfiguration defConfig = YamlConfiguration
-                    .loadConfiguration(new InputStreamReader(defStream, StandardCharsets.UTF_8));
+        if (defStream == null)
+            return;
 
-            int currentVersion = defConfig.getInt("config-version", 1);
-            boolean updateNeeded = !langConfig.contains("config-version")
-                    || langConfig.getInt("config-version") < currentVersion;
+        YamlConfiguration defConfig = YamlConfiguration
+                .loadConfiguration(new InputStreamReader(defStream, StandardCharsets.UTF_8));
 
-            if (updateNeeded) {
-                if (!langConfig.contains("config-version")) {
-                    plugin.getLogger()
-                            .info("Updating " + locale + ".yml (missing version) to version " + currentVersion + "...");
-                } else {
-                    plugin.getLogger().info("Updating " + locale + ".yml from version "
-                            + langConfig.getInt("config-version") + " to " + currentVersion + "...");
-                }
+        int currentVersion = defConfig.getInt("config-version", 1);
 
-                for (String key : langConfig.getKeys(true)) {
-                    if (!langConfig.isConfigurationSection(key) && defConfig.contains(key)) {
-                        defConfig.set(key, langConfig.get(key));
-                    }
-                }
+        int fileVersion = langConfig.contains("config-version")
+                ? langConfig.getInt("config-version")
+                : -1;
 
-                defConfig.set("config-version", currentVersion);
+        if (fileVersion == -1 || fileVersion < currentVersion) {
 
-                try {
-                    int oldVer = langConfig.contains("config-version") ? langConfig.getInt("config-version") : 0;
-                    File backupFile = new File(plugin.getDataFolder(), "lang/" + locale + "-old-v" + oldVer + ".yml");
-                    if (backupFile.exists())
-                        backupFile.delete();
-                    java.nio.file.Files.copy(langFile.toPath(), backupFile.toPath(),
-                            java.nio.file.StandardCopyOption.REPLACE_EXISTING);
-
-                    defConfig.save(langFile);
-                    plugin.getLogger().info(locale + ".yml successfully updated (comments preserved). Backup saved as "
-                            + backupFile.getName());
-                } catch (IOException e) {
-                    plugin.getLogger().severe("Could not save " + locale + ".yml: " + e.getMessage());
-                }
-
-                langConfig = YamlConfiguration.loadConfiguration(langFile);
+            if (fileVersion == -1) {
+                plugin.getLogger()
+                        .info("Updating " + locale + ".yml (missing version) to version " + currentVersion + "...");
+            } else {
+                plugin.getLogger().info(
+                        "Updating " + locale + ".yml from version " + fileVersion + " to " + currentVersion + "...");
             }
+
+            // Merge existing values into new default config
+            for (String key : langConfig.getKeys(true)) {
+                if (!langConfig.isConfigurationSection(key) && defConfig.contains(key)) {
+                    defConfig.set(key, langConfig.get(key));
+                }
+            }
+
+            defConfig.set("config-version", currentVersion);
+
+            try {
+                int oldVer = fileVersion == -1 ? 0 : fileVersion;
+                File backupFile = new File(plugin.getDataFolder(), "lang/" + locale + "-old-v" + oldVer + ".yml");
+
+                if (backupFile.exists())
+                    backupFile.delete();
+
+                java.nio.file.Files.copy(langFile.toPath(), backupFile.toPath(),
+                        java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+                defConfig.save(langFile);
+
+                plugin.getLogger().info(locale + ".yml successfully updated. Backup saved as " + backupFile.getName());
+            } catch (IOException e) {
+                plugin.getLogger().severe("Could not save " + locale + ".yml: " + e.getMessage());
+            }
+
+            langConfig = YamlConfiguration.loadConfiguration(langFile);
         }
     }
 
