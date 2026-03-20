@@ -1,3 +1,10 @@
+# ╔══════════════════════════════════════════════════════╗
+# ║           MazeEconomy Lang (en_US)                   ║
+# ║        Author: PixelMCN | Version: 1.0.0             ║
+# ╚══════════════════════════════════════════════════════╝
+
+# DO NOT EDIT THIS FIELD, THE PLUGIN WILL EDIT THIS FIELD AUTOMATICALLY, IT IS USED TO UPDATE THE CONFIG FILES
+config-version: 2
 prefix: "<gray>[<#C9A55A><b>ᴍᴇᴄᴏ</b></#C9A55A>]</gray> "
 
 local:
@@ -16,6 +23,7 @@ local:
   bank-insufficient: "<#D97A7A>ɪɴsᴜғғɪᴄɪᴇɴᴛ ʙᴀʟᴀɴᴄᴇ</#D97A7A>"
   bank-invalid-amount: "<#D97A7A>ɪɴᴠᴀʟɪᴅ ᴀᴍᴏᴜɴᴛ</#D97A7A>"
   bank-interest: "<#7FB77E>ɪɴᴛᴇʀᴇsᴛ ᴇᴀʀɴᴇᴅ</#7FB77E> <gray>+<#C9A55A>{symbol}{amount}</#C9A55A> <gray>ᴏɴ ʏᴏᴜʀ ʙᴀɴᴋ ʙᴀʟᴀɴᴄᴇ.</gray>"
+  feature-disabled: "<#D97A7A>ᴛʜɪs ғᴇᴀᴛᴜʀᴇ ɪs ᴅɪsᴀʙʟᴇᴅ ᴏɴ ᴛʜɪs sᴇʀᴠᴇʀ.</#D97A7A>"
   prompt-deposit: "<yellow>ᴘʟᴇᴀsᴇ ᴛʏᴘᴇ ᴛʜᴇ ᴇxᴀᴄᴛ ᴀᴍᴏᴜɴᴛ ʏᴏᴜ ᴡɪsʜ ᴛᴏ ᴅᴇᴘᴏsɪᴛ ɪɴ ᴄʜᴀᴛ (ᴏʀ ᴛʏᴘᴇ 'ᴄᴀɴᴄᴇʟ' ᴛᴏ ᴇxɪᴛ).</yellow>"
   prompt-withdraw: "<yellow>ᴘʟᴇᴀsᴇ ᴛʏᴘᴇ ᴛʜᴇ ᴇxᴀᴄᴛ ᴀᴍᴏᴜɴᴛ ʏᴏᴜ ᴡɪsʜ ᴛᴏ ᴡɪᴛʜᴅʀᴀᴡ ɪɴ ᴄʜᴀᴛ (ᴏʀ ᴛʏᴘᴇ 'ᴄᴀɴᴄᴇʟ' ᴛᴏ ᴇxɪᴛ).</yellow>"
   prompt-invalid: "<#D97A7A>ɪɴᴠᴀʟɪᴅ ɴᴜᴍʙᴇʀ. ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴀ ᴠᴀʟɪᴅ ɴᴜᴍᴇʀɪᴄ ᴀᴍᴏᴜɴᴛ ᴡɪᴛʜᴏᴜᴛ sʏᴍʙᴏʟs.</#D97A7A>"

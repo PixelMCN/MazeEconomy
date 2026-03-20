@@ -25,7 +25,12 @@ public class PayCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
-                             @NotNull String label, @NotNull String[] args) {
+            @NotNull String label, @NotNull String[] args) {
+
+        if (!plugin.getConfigManager().isLocalEconomyEnabled()) {
+            FormatUtil.sendConfigMessage(plugin, sender, "local.feature-disabled");
+            return true;
+        }
 
         if (!(sender instanceof Player payer)) {
             FormatUtil.sendConfigMessage(plugin, sender, "player-only");
@@ -57,21 +62,21 @@ public class PayCommand implements CommandExecutor, TabCompleter {
         double amount;
         try {
             amount = Double.parseDouble(args[1]);
-            if (amount <= 0) throw new NumberFormatException();
+            if (amount <= 0)
+                throw new NumberFormatException();
         } catch (NumberFormatException e) {
             FormatUtil.sendConfigMessage(plugin, sender, "local.pay-invalid-amount");
             return true;
         }
 
-        String symbol   = plugin.getConfigManager().getLocalCurrencySymbol();
+        String symbol = plugin.getConfigManager().getLocalCurrencySymbol();
         String currency = plugin.getConfigManager().getLocalCurrencyNamePlural();
-        int decimals    = plugin.getConfigManager().getLocalFormatDecimals();
+        int decimals = plugin.getConfigManager().getLocalFormatDecimals();
 
         EconomyResponse resp = plugin.getLocalEconomyManager().pay(
                 payer.getUniqueId(), payer.getName(),
                 target.getUniqueId(), target.getName(),
-                amount
-        );
+                amount);
 
         if (resp.isSuccess()) {
             FormatUtil.sendConfigMessage(plugin, payer, "local.pay-success",
@@ -100,7 +105,7 @@ public class PayCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command,
-                                      @NotNull String label, @NotNull String[] args) {
+            @NotNull String label, @NotNull String[] args) {
         if (args.length == 1) {
             return Bukkit.getOnlinePlayers().stream()
                     .filter(p -> !p.equals(sender))

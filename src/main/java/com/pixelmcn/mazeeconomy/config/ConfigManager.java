@@ -2,6 +2,13 @@ package com.pixelmcn.mazeeconomy.config;
 
 import com.pixelmcn.mazeeconomy.MazeEconomy;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class ConfigManager {
 
@@ -16,6 +23,56 @@ public class ConfigManager {
         plugin.saveDefaultConfig();
         plugin.reloadConfig();
         this.config = plugin.getConfig();
+        updateConfig();
+    }
+
+    private void updateConfig() {
+        File configFile = new File(plugin.getDataFolder(), "config.yml");
+        if (!configFile.exists())
+            return;
+
+        YamlConfiguration userConfig = YamlConfiguration.loadConfiguration(configFile);
+
+        InputStream defStream = plugin.getResource("config.yml");
+        if (defStream == null)
+            return;
+
+        YamlConfiguration defConfig = YamlConfiguration
+                .loadConfiguration(new InputStreamReader(defStream, StandardCharsets.UTF_8));
+
+        int currentVersion = defConfig.getInt("config-version", 1);
+        int fileVersion = userConfig.getInt("config-version", 1);
+
+        if (fileVersion < currentVersion) {
+            plugin.getLogger()
+                    .info("Updating config.yml from version " + fileVersion + " to " + currentVersion + "...");
+
+            for (String key : userConfig.getKeys(true)) {
+                if (!userConfig.isConfigurationSection(key) && defConfig.contains(key)) {
+                    defConfig.set(key, userConfig.get(key));
+                }
+            }
+
+            defConfig.set("config-version", currentVersion);
+
+            try {
+                int oldVer = userConfig.contains("config-version") ? userConfig.getInt("config-version") : 0;
+                File backupFile = new File(plugin.getDataFolder(), "config-old-v" + oldVer + ".yml");
+                if (backupFile.exists())
+                    backupFile.delete();
+                java.nio.file.Files.copy(configFile.toPath(), backupFile.toPath(),
+                        java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+                defConfig.save(configFile);
+                plugin.getLogger().info("config.yml successfully updated (comments preserved). Backup saved as "
+                        + backupFile.getName());
+            } catch (IOException e) {
+                plugin.getLogger().severe("Could not save config.yml: " + e.getMessage());
+            }
+
+            plugin.reloadConfig();
+            this.config = plugin.getConfig();
+        }
     }
 
     public void reload() {

@@ -72,10 +72,16 @@ public class EcoCommand implements CommandExecutor, TabCompleter {
         String targetName = target.getName() != null ? target.getName() : playerArg;
 
         switch (currencyArg) {
-            case "local" -> handleLocal(sender, action, target, targetName, amount);
+            case "local" -> {
+                if (!plugin.getConfigManager().isLocalEconomyEnabled()) {
+                    FormatUtil.sendConfigMessage(plugin, sender, "local.feature-disabled");
+                    return true;
+                }
+                handleLocal(sender, action, target, targetName, amount);
+            }
             case "mazecoins", "shards" -> {
                 if (!plugin.isGlobalEconomyActive()) {
-                    sender.sendMessage("Global economy is not active on this server.");
+                    FormatUtil.sendConfigMessage(plugin, sender, "global.disabled");
                     return true;
                 }
                 GlobalCurrencyType type = currencyArg.equals("mazecoins")

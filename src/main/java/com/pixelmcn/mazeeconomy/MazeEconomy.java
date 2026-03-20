@@ -4,6 +4,7 @@ import com.pixelmcn.mazeeconomy.api.impl.MazeEconomyAPI;
 import com.pixelmcn.mazeeconomy.command.admin.EcoCommand;
 import com.pixelmcn.mazeeconomy.command.admin.MazeEconomyCommand;
 import com.pixelmcn.mazeeconomy.command.bank.BankCommand;
+import com.pixelmcn.mazeeconomy.command.global.LeaderboardCommand;
 import com.pixelmcn.mazeeconomy.command.global.MazeCoinsCommand;
 import com.pixelmcn.mazeeconomy.command.global.ShardsCommand;
 import com.pixelmcn.mazeeconomy.command.local.BalanceCommand;
@@ -170,6 +171,7 @@ public final class MazeEconomy extends JavaPlugin {
         if (globalEconomyActive) {
             reg("mazecoins", new MazeCoinsCommand(this), true);
             reg("shards", new ShardsCommand(this), true);
+            reg("leaderboard", new LeaderboardCommand(this), false);
         }
     }
 
@@ -188,7 +190,7 @@ public final class MazeEconomy extends JavaPlugin {
     private void printBanner(boolean vault, boolean papi) {
         var cfg = configManager;
 
-        logHeader(GOLD + "MazeEconomy v" + getDescription().getVersion() + " by MazecraftMCN Team");
+        logHeader(GOLD + "MazeEconomy v" + getDescription().getVersion() + " by PixelMCN");
 
         log(GRAY + "Server       : " + cfg.getServerId());
         log(GRAY + "Currency     : " + cfg.getLocalCurrencyNamePlural());
@@ -212,17 +214,17 @@ public final class MazeEconomy extends JavaPlugin {
     }
 
     private void logHeader(String title) {
-        getLogger().info(DARK_GRAY + "---------------------" + RESET);
+        getLogger().info(DARK_GRAY + "------------------------" + RESET);
         getLogger().info("  " + title + RESET);
-        getLogger().info(DARK_GRAY + "---------------------" + RESET);
+        getLogger().info(DARK_GRAY + "------------------------" + RESET);
     }
 
     private void logFooter() {
-        getLogger().info(DARK_GRAY + "---------------------" + RESET);
+        getLogger().info(DARK_GRAY + "------------------------" + RESET);
     }
 
     private void warnBlock(String title, String reason) {
-        getLogger().warning(DARK_GRAY + "---------------------" + RESET);
+        getLogger().warning(DARK_GRAY + "------------------------" + RESET);
         getLogger().warning("  " + RED + title + RESET);
         getLogger().warning("  " + GRAY + "reason: " + reason + RESET);
         getLogger().warning(DARK_GRAY + "---" + RESET);

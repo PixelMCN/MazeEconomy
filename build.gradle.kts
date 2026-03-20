@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.pixelmcn"
-version = "1.0.0"
+version = "1.0.1"
 description = "MazeEconomy - Multi-currency cross-server economy plugin by PixelMCN"
 
 java {

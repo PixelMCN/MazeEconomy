@@ -24,6 +24,11 @@ public class BankCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
             @NotNull String label, @NotNull String[] args) {
 
+        if (!plugin.getConfigManager().isLocalEconomyEnabled()) {
+            FormatUtil.sendConfigMessage(plugin, sender, "local.feature-disabled");
+            return true;
+        }
+
         if (!(sender instanceof Player player)) {
             FormatUtil.sendConfigMessage(plugin, sender, "player-only");
             return true;

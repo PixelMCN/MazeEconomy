@@ -20,7 +20,12 @@ public class BalanceTopCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command,
-                             @NotNull String label, @NotNull String[] args) {
+            @NotNull String label, @NotNull String[] args) {
+
+        if (!plugin.getConfigManager().isLocalEconomyEnabled()) {
+            FormatUtil.sendConfigMessage(plugin, sender, "local.feature-disabled");
+            return true;
+        }
 
         if (!sender.hasPermission("mazeeconomy.balancetop")) {
             FormatUtil.sendConfigMessage(plugin, sender, "no-permission");
@@ -31,24 +36,28 @@ public class BalanceTopCommand implements CommandExecutor {
         if (args.length > 0) {
             try {
                 page = Integer.parseInt(args[0]);
-                if (page < 1) page = 1;
-            } catch (NumberFormatException ignored) {}
+                if (page < 1)
+                    page = 1;
+            } catch (NumberFormatException ignored) {
+            }
         }
 
         int totalPages = plugin.getLocalEconomyManager().getTotalPages();
-        if (totalPages == 0) totalPages = 1;
-        if (page > totalPages) page = totalPages;
+        if (totalPages == 0)
+            totalPages = 1;
+        if (page > totalPages)
+            page = totalPages;
 
-        final int finalPage  = page;
+        final int finalPage = page;
         final int finalTotal = totalPages;
 
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
             List<BalanceEntry> entries = plugin.getLocalEconomyManager().getTopBalances(finalPage);
-            int perPage  = plugin.getConfigManager().getBaltopEntriesPerPage();
-            int offset   = (finalPage - 1) * perPage;
-            String symbol   = plugin.getConfigManager().getLocalCurrencySymbol();
+            int perPage = plugin.getConfigManager().getBaltopEntriesPerPage();
+            int offset = (finalPage - 1) * perPage;
+            String symbol = plugin.getConfigManager().getLocalCurrencySymbol();
             String currency = plugin.getConfigManager().getLocalCurrencyNamePlural();
-            int decimals    = plugin.getConfigManager().getLocalFormatDecimals();
+            int decimals = plugin.getConfigManager().getLocalFormatDecimals();
 
             plugin.getServer().getScheduler().runTask(plugin, () -> {
                 FormatUtil.sendConfigMessage(plugin, sender, "local.baltop-header",

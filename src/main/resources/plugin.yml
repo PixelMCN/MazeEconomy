@@ -44,6 +44,12 @@ commands:
     usage: /shards [player]
     permission: mazeeconomy.global.shards
 
+  leaderboard:
+    description: Global economy leaderboard for Mazecoins and Shards.
+    usage: /leaderboard
+    permission: mazeeconomy.global.leaderboard
+    aliases: [ gb, globaltop, gtop ]
+
   eco:
     description: Admin economy management.
     usage: /eco <set/add/remove> <local/mazecoins/shards> <player> <amount>

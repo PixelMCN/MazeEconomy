@@ -3,6 +3,9 @@
 # ║        Author: PixelMCN | Version: 1.0.0             ║
 # ╚══════════════════════════════════════════════════════╝
 
+# DO NOT EDIT THIS FIELD, THE PLUGIN WILL EDIT THIS FIELD AUTOMATICALLY, IT IS USED TO UPDATE THE CONFIG FILES
+config-version: 2
+
 server:
   id: "survival"
   display-name: "Survival Server"

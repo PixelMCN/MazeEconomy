@@ -4,6 +4,10 @@ import com.pixelmcn.mazeeconomy.MazeEconomy;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class LanguageManager {
@@ -32,6 +36,51 @@ public class LanguageManager {
             }
         }
         langConfig = YamlConfiguration.loadConfiguration(langFile);
+
+        InputStream defStream = plugin.getResource("lang/" + locale + ".yml");
+        if (defStream != null) {
+            YamlConfiguration defConfig = YamlConfiguration
+                    .loadConfiguration(new InputStreamReader(defStream, StandardCharsets.UTF_8));
+
+            int currentVersion = defConfig.getInt("config-version", 1);
+            boolean updateNeeded = !langConfig.contains("config-version")
+                    || langConfig.getInt("config-version") < currentVersion;
+
+            if (updateNeeded) {
+                if (!langConfig.contains("config-version")) {
+                    plugin.getLogger()
+                            .info("Updating " + locale + ".yml (missing version) to version " + currentVersion + "...");
+                } else {
+                    plugin.getLogger().info("Updating " + locale + ".yml from version "
+                            + langConfig.getInt("config-version") + " to " + currentVersion + "...");
+                }
+
+                for (String key : langConfig.getKeys(true)) {
+                    if (!langConfig.isConfigurationSection(key) && defConfig.contains(key)) {
+                        defConfig.set(key, langConfig.get(key));
+                    }
+                }
+
+                defConfig.set("config-version", currentVersion);
+
+                try {
+                    int oldVer = langConfig.contains("config-version") ? langConfig.getInt("config-version") : 0;
+                    File backupFile = new File(plugin.getDataFolder(), "lang/" + locale + "-old-v" + oldVer + ".yml");
+                    if (backupFile.exists())
+                        backupFile.delete();
+                    java.nio.file.Files.copy(langFile.toPath(), backupFile.toPath(),
+                            java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+
+                    defConfig.save(langFile);
+                    plugin.getLogger().info(locale + ".yml successfully updated (comments preserved). Backup saved as "
+                            + backupFile.getName());
+                } catch (IOException e) {
+                    plugin.getLogger().severe("Could not save " + locale + ".yml: " + e.getMessage());
+                }
+
+                langConfig = YamlConfiguration.loadConfiguration(langFile);
+            }
+        }
     }
 
     public void reload() {

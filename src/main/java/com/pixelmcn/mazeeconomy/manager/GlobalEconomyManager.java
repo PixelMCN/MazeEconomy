@@ -34,14 +34,15 @@ public class GlobalEconomyManager {
 
     public GlobalEconomyManager(MazeEconomy plugin, MariaDBManager db) {
         this.plugin = plugin;
-        this.db     = db;
+        this.db = db;
     }
 
     // ── Sync Task ─────────────────────────────────────────────────────────────
 
     public void startSyncTask() {
         long interval = plugin.getConfigManager().getGlobalSyncIntervalTicks();
-        syncTask = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::syncOnlinePlayers, interval, interval);
+        syncTask = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::syncOnlinePlayers, interval,
+                interval);
         plugin.getLogger().info("Global economy sync task started (every " + interval + " ticks).");
     }
 
@@ -54,7 +55,8 @@ public class GlobalEconomyManager {
     private void syncOnlinePlayers() {
         for (UUID uuid : onlinePlayers) {
             var playerCache = cache.get(uuid);
-            if (playerCache == null) continue;
+            if (playerCache == null)
+                continue;
             for (GlobalCurrencyType currency : GlobalCurrencyType.values()) {
                 double dbBal = db.getBalance(uuid, currency);
                 if (dbBal >= 0) {
@@ -63,9 +65,8 @@ public class GlobalEconomyManager {
                         playerCache.put(currency, dbBal);
                         // Fire event on main thread
                         double finalDbBal = dbBal;
-                        Bukkit.getScheduler().runTask(plugin, () ->
-                                fireChangeEvent(uuid, currency, cached, finalDbBal,
-                                        GlobalBalanceChangeEvent.Reason.SYNC));
+                        Bukkit.getScheduler().runTask(plugin, () -> fireChangeEvent(uuid, currency, cached, finalDbBal,
+                                GlobalBalanceChangeEvent.Reason.SYNC));
                     }
                 }
             }
@@ -100,7 +101,7 @@ public class GlobalEconomyManager {
         if (!db.hasAccount(uuid, currency)) {
             double starting = switch (currency) {
                 case MAZECOINS -> plugin.getConfigManager().getMazecoinStartingBalance();
-                case SHARDS    -> plugin.getConfigManager().getShardStartingBalance();
+                case SHARDS -> plugin.getConfigManager().getShardStartingBalance();
             };
             db.createAccount(uuid, playerName, currency, starting);
         }
@@ -110,14 +111,20 @@ public class GlobalEconomyManager {
 
     public double getBalance(UUID uuid, GlobalCurrencyType currency) {
         var playerCache = cache.get(uuid);
-        if (playerCache != null) return playerCache.getOrDefault(currency, 0.0);
+        if (playerCache != null)
+            return playerCache.getOrDefault(currency, 0.0);
         // Offline player: fetch directly from DB
         double bal = db.getBalance(uuid, currency);
         return bal >= 0 ? bal : 0.0;
     }
 
+    public java.util.List<java.util.Map.Entry<String, Double>> getTopBalances(GlobalCurrencyType currency, int limit) {
+        return db.getTopBalances(currency, limit);
+    }
+
     public EconomyResponse setBalance(UUID uuid, String playerName, GlobalCurrencyType currency, double amount) {
-        if (amount < 0) return EconomyResponse.invalidAmount();
+        if (amount < 0)
+            return EconomyResponse.invalidAmount();
         double clamped = Math.max(0.0, amount);
         double old = getBalance(uuid, currency);
 
@@ -130,8 +137,9 @@ public class GlobalEconomyManager {
     }
 
     public EconomyResponse deposit(UUID uuid, String playerName, GlobalCurrencyType currency, double amount) {
-        if (amount <= 0) return EconomyResponse.invalidAmount();
-        double old    = getBalance(uuid, currency);
+        if (amount <= 0)
+            return EconomyResponse.invalidAmount();
+        double old = getBalance(uuid, currency);
         double newBal = old + amount;
 
         updateCache(uuid, currency, newBal);
@@ -143,9 +151,11 @@ public class GlobalEconomyManager {
     }
 
     public EconomyResponse withdraw(UUID uuid, String playerName, GlobalCurrencyType currency, double amount) {
-        if (amount <= 0) return EconomyResponse.invalidAmount();
+        if (amount <= 0)
+            return EconomyResponse.invalidAmount();
         double old = getBalance(uuid, currency);
-        if (old < amount) return EconomyResponse.insufficientFunds(old);
+        if (old < amount)
+            return EconomyResponse.insufficientFunds(old);
 
         double newBal = old - amount;
         updateCache(uuid, currency, newBal);
@@ -167,9 +177,9 @@ public class GlobalEconomyManager {
     }
 
     private void fireChangeEvent(UUID uuid, GlobalCurrencyType currency,
-                                 double oldBal, double newBal, GlobalBalanceChangeEvent.Reason reason) {
+            double oldBal, double newBal, GlobalBalanceChangeEvent.Reason reason) {
         var player = Bukkit.getPlayer(uuid);
-        var event  = new GlobalBalanceChangeEvent(uuid, player, currency, oldBal, newBal, reason);
+        var event = new GlobalBalanceChangeEvent(uuid, player, currency, oldBal, newBal, reason);
         // Fire on main thread if currently async
         if (Bukkit.isPrimaryThread()) {
             Bukkit.getPluginManager().callEvent(event);

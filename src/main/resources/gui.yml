@@ -1,3 +1,10 @@
+# ╔══════════════════════════════════════════════════════╗
+# ║          MazeEconomy GUI Configuration               ║
+# ║        Author: PixelMCN | Version: 1.0.0             ║
+# ╚══════════════════════════════════════════════════════╝
+
+# DO NOT EDIT THIS FIELD, THE PLUGIN WILL EDIT THIS FIELD AUTOMATICALLY, IT IS USED TO UPDATE THE CONFIG FILES
+config-version: 2
 bank-hub:
   deposit: LIME_DYE
   withdraw: RED_DYE
